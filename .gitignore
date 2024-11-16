@@ -1,0 +1,25 @@
+# mac
+.DS_Store
+
+# test
+coverage
+*.log
+
+# node
+node_modules
+
+# python
+__pycache__
+*.ipynb
+
+# vscode
+.vscode
+
+# Emacs
+*~
+\#*\#
+.\#*
+.ignore
+
+cache/*
+cover/*
