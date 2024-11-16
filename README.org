@@ -3,4 +3,4 @@
 #+TITLE: WallHaven Crawler
 #+DATE: [2024-11-16 16:09]
 
-[[[[file:demo.jpg]]]]
+[[file:demo.jpg]]
