@@ -84,7 +84,7 @@ EOF
 cover_list=$(sh ./sql/download-cover.sh $covers)
 
 
-cs=$(subfix 'tag' "printf('%03d', ROW_NUMBER() OVER () - $of - 74) AS row_number, A.id, substr(date_str, 1, 10) ,  'Views: '|| printf('%6d', view), 'Fav: ' || printf('%6d', fav), A.str")
+cs=$(subfix 'tag' "printf('%03d', ROW_NUMBER() OVER () - $of - 24) AS row_number, A.id, substr(date_str, 1, 10) ,  'Views: '|| printf('%6d', view), 'Fav: ' || printf('%6d', fav), A.str")
 
 sqlite3 wh.sqlite3.db <<EOF | while IFS="|" read -r num i d v f tag; do
 $prefix
@@ -94,32 +94,28 @@ EOF
 done
 
 # echo "$cover_list"
- gridW=5
- gridH=6
+gridW=5
+gridH=6
 
- W=300
- H=200
- LW=$(($W * $gridW))
- LH=$(($H * ($gridH + 1)))
-feh  --geometry +3000+60 -i --index-info '' --thumb-width $W --thumb-height $H \
+W=300
+H=200
+LW=$(($W * $gridW))
+LH=$(($H * ($gridH + 1)))
+# pwd
+# echo $cover_list
+cmd=$(cat <<EOF
+feh --geometry +3000+60 -i --index-info '' --thumb-width $W --thumb-height $H \
    --limit-width $LW --limit-height $LH --zoom 170 $cover_list
-cnt=0
-for m in $cover_list
-do
-    cnt=$((cnt+1))
-done
 
-if [ "$total" -eq "$cnt" ]; then
-    echo ''
-    # sleep 1
-    # sh "$0" "$meta" $((of + total))
-    read -r -p "Continue? [y/N] " response
-    case "$response" in
-	[nN][oO]|[nN])
-	    exit
-	    ;;
-	"")
-	    sh "$0" $((of + total)) $st "$meta" 
-	    ;;
-    esac
+EOF
+    )
+# echo $cmd
+eval $cmd
+echo ''
+if read -q "choice?Stop?"; then
+    echo $choice
+else
+    cmd="source \"$0\" $((of + total)) $st \"$meta\""
+    print -s "$cmd"
+    eval $cmd
 fi

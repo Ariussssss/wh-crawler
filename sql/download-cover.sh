@@ -3,11 +3,12 @@ covers=$@
 
 max_jobs=24
 current_jobs=0
+BASEDIR=$(dirname $(dirname $0))
 
 for cover in $covers
 do
     target=$(basename $cover)
-    target="./cover/$target"
+    target="$BASEDIR/cover/$target"
     # echo $target
     cover_list="$cover_list $target"
 

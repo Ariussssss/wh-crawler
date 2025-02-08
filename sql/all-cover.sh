@@ -56,7 +56,7 @@ done
 wait
 du -h -d 1
 echo 'sleeping...'
-sleep 30
+sleep 300
 sh "$0"
 # echo $cover_list
 
